@@ -13,18 +13,22 @@ var T = new Twit({
     "access_token_secret": process.env.ACCESS_TOKEN_SECRET || twitterCredentials["access_token_secret"]
 });
 
-module.exports = { 
+module.exports = {
 
   // getTweets: Function that gets the 'n' most recent tweets given a query string and a number n
   getTweets: function(query, number, callback) {
     T.get('search/tweets', {q: query, count: number}, callback);
   },
 
+
   // streamTweets: Function that streams tweets with a location or geocode provided
   streamTweets: function(query, callback) {
-    var stream = T.stream('statuses/filter', {'locations':['-180','-90','180','90']});
+    var stream = T.stream('statuses/filter', {'locations':['-180','-90','180','90']})
     stream.on('tweet', callback);
+
   }
+
+
 };
 
 
