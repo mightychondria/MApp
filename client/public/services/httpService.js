@@ -56,7 +56,18 @@ app.service('httpService', ['$http', function ($http) {
       });
   }
 
+   this.trending = function () {
+      return $http.get({
+        method: 'GET',
+        url: 'https://api.twitter.com/1.1/trends/place'
+      }).then(function(data){
+        console.log(data);
+        return data;
+      }).catch(function(e){
+        console.log(e);
+      })
 
+  }
 
 
 
