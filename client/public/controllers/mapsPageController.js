@@ -10,7 +10,7 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
   //create array that will contain data for ONLY quality/relevant tweets
   $scope.relevantTweets = [];
 
-  //function that will ultimately 
+  //function that will ultimately
   $scope.favoriteSubmit = function () {
     httpService.sendFavorite($scope.favoriteField);
   };
@@ -21,17 +21,17 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
   }
 
   ////////////////////////////////////////////CREATE AND OPEN SOCKET/////////////////////////////////////////////////////////
-  
+
   var onInit = function() {
-    
+
     ////////////////////////////////ASSUMPTIONS + DRIVERS FOR HANDLING DATA STREAM///////////////////////////////////////////
-    
+
     //establish map drivers
     var maxNumOfTweetsAllowedOnMap = 1000;
     var heatmap = new google.maps.visualization.HeatmapLayer({
       radius: 15
     });
-    
+
     var setMapOnAll = function(map) {
       for (var i = 0; i < $scope.allTweets.data.length; i++) {
         $scope.allTweets.data[i].setMap(map);
@@ -46,35 +46,36 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
       $scope.allTweets.data = [];
     };
 
-    //establish tweet relevancy criteria; 
-    var numOfFollowersToBeRelevant = 10000;
-    var numOfRetweetsToBeRelevant = 50; 
-    var maxNumOfRelevantTweetsAllowed = 15;
+    //establish tweet relevancy criteria;
+    var numOfFollowersToBeRelevant = 0;
+    var numOfRetweetsToBeRelevant = 0;
+    var maxNumOfRelevantTweetsAllowed = 1500000;
 
 
     //////////////////////////////////////////SET UP HEAT MAP///////////////////////////////////////////////////
     $timeout(function(){
       heatmap.setMap(window.map);
     }, 10);
- 
+
     //////////////////////////////////////////CONNECT TO SOCKET///////////////////////////////////////////////
     if(io !== undefined) {
       //connects to socket
       var socket = io.connect();
-      //uses socket to listen for incoming tweet stream 
-      
+      //uses socket to listen for incoming tweet stream
+
       //code is a little buggy, but should offer a good start for doing the following when a search request is submitted:
       // a) clearing the map, b) emitting a filter request to the stream and c) re-starting the heatmap
-      // $scope.submitSearch = function () {
-      //   deleteMarkers();
-      //   heatmap.setMap(null);
-      //   socket.emit("filter", $scope.searchField);
-      //   console.log($scope.searchField);
-      //   heatmap = new google.maps.visualization.HeatmapLayer({
-      //     radius: 15
-      //   });
-      //   heatmap.setMap(window.map);
-      // };
+      $scope.submitSearch = function () {
+
+        deleteMarkers();
+        heatmap.setMap(null);
+        socket.emit("filter", $scope.searchField);
+
+        heatmap = new google.maps.visualization.HeatmapLayer({
+          radius: 15
+        });
+        heatmap.setMap(window.map);
+      };
 
       socket.on('tweet-stream', function (data) {
 
@@ -90,13 +91,13 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
         var tweetObject = {};
         //if incoming tweet meets relevancy criteria...
         if((numOfFollowers >= numOfFollowersToBeRelevant) || (numOfRetweets >= numOfRetweetsToBeRelevant)){
-          //then check to see how many relevant tweets are already being displayed on page; if max limit 
+          //then check to see how many relevant tweets are already being displayed on page; if max limit
           //has already been reached then pop last item out of relevantsTweets array
           if($scope.relevantTweets.length === maxNumOfRelevantTweetsAllowed){
             $scope.relevantTweets.pop();
           }
           //for all incoming tweets that match criteria, create a tweetObject that contains most relevant info for tweet
-          //(e.g. handle, content, and time);         
+          //(e.g. handle, content, and time);
           tweetObject = {
             handle: data.handle,
             text: data.tweetText,
@@ -110,17 +111,17 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
 
         ///////////////////////////////////PLACE ALL INCOMING TWEETS ON MAP///////////////////////////////////////
 
-        var tweetLocation = new google.maps.LatLng(data["coordinates"]["coordinates"][1], data["coordinates"]["coordinates"][0]);
-        
+        var tweetLocation = new google.maps.LatLng(data["coordinates"][1], data["coordinates"][0]);
+
         heatmap.data.push(tweetLocation);
-        
+
         var tweetMarker = new google.maps.Marker({
            icon: "client/assets/small-dot-icon.png",
            position: tweetLocation,
            map: window.map
          });
 
-        //determine content added to info window on each marker  
+        //determine content added to info window on each marker
         var tweetContent = '<div>' + data['name'] + ": " + data['tweetText'] + '</div>';
         var markerInfoWindow = new google.maps.InfoWindow({
            content: tweetContent
@@ -139,9 +140,9 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
         $scope.allTweets.data.push(tweetMarker);
 
       })
-      
 
-      socket.on('connected', function (r) {
+
+      socket.on('connected', function () {
         console.log('connected client');
         socket.emit('tweet flow');
       })
