@@ -83,6 +83,7 @@ io.sockets.on('connection', function(socket) {
 
             //looking for search term within the text of the tweet
             if(twitterTopic !== undefined) {
+
               topicExists = textSearch.findTwitterTopic(twitterTopic, tweetObject.text);
               // console.log(topicExists)
             }
@@ -127,8 +128,8 @@ io.sockets.on('connection', function(socket) {
     }
   });
   socket.on('filter', function(topic) {
-    console.log('in filter' , topic)
-                twitterTopic = topic;
+    console.log('in filter' , topic.replace(/\s/g, ''))
+                twitterTopic = topic.replace(/\s/g, '');
               });
   socket.on("disconnect", function() {
     console.log('disconnected');

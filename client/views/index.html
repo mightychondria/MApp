@@ -10,8 +10,8 @@
     <nav ng-controller='signupController'>
       <ul class='navigation'>
         <li><a href="#">home</a></li>
-        <li><a href="#">map</a></li>  
-        <li><a href="logout">sign out</a></li>  
+        <li><a href="#">map</a></li>
+        <li><a href="logout">sign out</a></li>
       </ul>
     </nav>
 
@@ -38,7 +38,10 @@
                <li class="relevantTweets"><b>{{tweet.handle}}: </b>{{tweet.text}}</li>
               </div>
             </ul>
-          </div> 
+          </div>
+        </div>
+        <div id='trends'>
+          {{trends}}
         </div>
       </div>
    </div>
@@ -57,4 +60,4 @@
   <script src="https://maps.googleapis.com/maps/api/js?libraries=visualization"></script>
   <script src="node_modules/socket.io-client/socket.io.js"></script>
 
-</html> 
+</html>

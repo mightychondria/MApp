@@ -1,7 +1,7 @@
 app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', "$timeout", function ($scope, $http, httpService, $sce, $timeout) {
 
   //////////////////////////////////////////MAPS PAGE CONTROLLER DRIVER//////////////////////////////////////////////
-
+  $scope.trends = [];
   //create array that will contain data for ALL incoming tweets
   $scope.allTweets = {
     data: []
@@ -18,6 +18,11 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
   //used for relevantTweets
   $scope.addRelevantTweet = function(tweet){
     $scope.relevantTweets.unshift(tweet);
+  }
+  $scope.trending = function(){
+    httpService.trending().then(function(trends){
+      $scope.trends.push(trends);
+    });
   }
 
   ////////////////////////////////////////////CREATE AND OPEN SOCKET/////////////////////////////////////////////////////////
