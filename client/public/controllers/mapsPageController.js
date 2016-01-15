@@ -20,8 +20,14 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
     $scope.relevantTweets.unshift(tweet);
   }
   $scope.trending = function(){
-    httpService.trending().then(function(trends){
-      $scope.trends.push(trends);
+
+    httpService.trending().then(function(results){
+      for(var i = 0;i<5;i++){
+        console.log(results.data[i])
+        $scope.trends.push(i+1 + '. ' + results.data[i].name)
+      }
+    }).catch(function(err){
+      console.log(err);
     });
   }
 

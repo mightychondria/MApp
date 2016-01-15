@@ -16,8 +16,22 @@ var T = new Twit({
 module.exports = {
 
   // getTweets: Function that gets the 'n' most recent tweets given a query string and a number n
-  getTweets: function(query, number, callback) {
-    T.get('search/tweets', {q: query, count: number}, callback);
+  trendingTweets: function(req, res) {
+    console.log('in api')
+    T.get('trends/place', {id: '1'}, function(error, data, response){
+      if(error){
+        return error;
+      }
+      res.json(data[0].trends.sort(function(a,b){
+        if(a.tweet_volume>b.tweet_volume){
+          return -1;
+        }
+        if(a.tweet_volume<b.tweet_volume){
+          return 1
+        }
+        return 0;
+      }));
+    });
   },
 
 
@@ -27,6 +41,8 @@ module.exports = {
     stream.on('tweet', callback);
 
   }
+
+
 
 
 };
