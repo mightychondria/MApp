@@ -3,6 +3,7 @@
   <head>
     <link rel="stylesheet" href="client/assets/stylesheets/styles.css"></link>
     <link rel='stylesheet' href="../../bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="client/assets/stylesheets/leaflet.css" />
     <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
   </head>
 
@@ -30,13 +31,12 @@
       </div>
       <div ui-view></div>
       <div id="mapContainer">
-      <div id='trends' ng-init= 'trending()'>
+      <!-- <div id='trends' ng-init= 'trending()'>
       <center>TOP HASHTAGS</center>
         <div ng-repeat='item in trends'>
-
           {{item}}
         </div>
-        </div>
+        </div> -->
         <render-map id="map"></render-map>
         <div class='realTime-Tweets'>
           <div id="recentRelevantTweetsContainer">
@@ -67,5 +67,7 @@
   <script src="client/public/controllers/mapsPageController.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?libraries=visualization"></script>
   <script src="node_modules/socket.io-client/socket.io.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.js'></script>
+<script src="client/assets/stylesheets/leaflet-src.js"></script>
 
 </html>
