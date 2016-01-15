@@ -14,3 +14,6 @@ config.js
 Dockerfile
 docker-compose.yml
 
+##database##
+/client/directives/graphdbcontents.json
+

@@ -128,12 +128,12 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
 
         heatmap.data.push(tweetLocation);
 
-        var tweetMarker = L.marker(tweetLocation)
-        tweetMarker.bindPopup('<div>' + data['name'] + ": " + data['tweetText'] + '</div>');;
+        // var tweetMarker = L.marker(tweetLocation)
+        // tweetMarker.bindPopup('<div>' + data['name'] + ": " + data['tweetText'] + '</div>');;
 
-        markers.addLayer(tweetMarker);
-        map.addLayer(markers)
-        //
+        // markers.addLayer(tweetMarker);
+        // map.addLayer(markers)
+        // //
 
 
         //determine content added to info window on each marker
