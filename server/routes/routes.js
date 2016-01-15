@@ -25,7 +25,7 @@ router.get('/', isLoggedIn, function(req, res, next) {
 router.get('/auth/twitter', passport.authenticate('twitter'));
 
 // Login Callback From Twitters O-Auth
-router.get('/auth/twitter/callback', 
+router.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/auth/twitter' }),
   function(req, res) {
     // Successful authentication, redirect home.
@@ -54,7 +54,7 @@ router.get('/api/tweets/:category', function(req, res) {
       var scrubbedTweetData = [];
       //loop through each tweetObject returned from the twitter API...
       data.statuses.forEach(function(tweetObject){
-        //if tweet object has a 'truthy' time_zone or coordinates property... 
+        //if tweet object has a 'truthy' time_zone or coordinates property...
         if(tweetObject['geo'] || tweetObject['coordinates']){
           //then create a scrubbedTweetObject containing most salient info...
           var scrubbedTweetObject = {
@@ -62,9 +62,9 @@ router.get('/api/tweets/:category', function(req, res) {
              handle: tweetObject.user['screen_name'],
              verified: tweetObject.user['verified'],
              createdAt: tweetObject.user['created_at'],
-             description: tweetObject.user['description'], 
+             description: tweetObject.user['description'],
              url: tweetObject.user['url'],
-             followers_count: tweetObject.user['followers_count'], 
+             followers_count: tweetObject.user['followers_count'],
              friends_count: tweetObject.user['friends_count'],
              timezone: tweetObject.user['time_zone'],
              coordinates: tweetObject['coordinates'],
@@ -79,7 +79,7 @@ router.get('/api/tweets/:category', function(req, res) {
           scrubbedTweetData.push(scrubbedTweetObject);
         }
       });
-    
+
       //once data has been scrubbed, send it back up to the client side!
       res.json(scrubbedTweetData);
     }

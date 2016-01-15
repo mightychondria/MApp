@@ -34,8 +34,20 @@ input{
   display: block;
   width: 100%;
   height: 100%;
+
   min-height: 750px;
   background-color: #ddd;
+}
+#trends{
+  background-color:#000;
+  width:300px;
+  left:300px;
+  z-index:1000;
+  margin-right:auto;
+  margin-left:auto;
+  position:relative;
+  opacity: .5;
+  color:white;
 }
 
 #recentRelevantTweetsContainer {
@@ -55,12 +67,12 @@ input{
   top:0px;
   right:0px;
   border:1px solid black;
-  height:750px;
-  overflow: scroll;
+  height:100%;
+  overflow: hidden;
   background-color:#222;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  opacity: 0.7;
+
 }
 
 .eachTweet {

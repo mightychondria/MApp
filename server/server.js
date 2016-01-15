@@ -1,6 +1,7 @@
 // Setup server dependencies
 var express = require('express');
 var path = require('path');
+var router = express.Router();
 var favicon = require('favicon');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -51,7 +52,8 @@ app.use(express.static(path.join(__dirname, '../')));
 
 /* Routes */
 app.use('/', routes);
-
+app.use('/', router);
+router.get('/api/trends', TwitterAPI.trendingTweets);
 //socket.io code below
 
 var server = app.listen(port);

@@ -57,14 +57,13 @@ app.service('httpService', ['$http', function ($http) {
   }
 
    this.trending = function () {
-      return $http.get({
+      return $http({
         method: 'GET',
-        url: 'https://api.twitter.com/1.1/trends/place'
+        url: '/api/trends'
       }).then(function(data){
-        console.log(data);
         return data;
-      }).catch(function(e){
-        console.log(e);
+      }).catch(function(err){
+        console.log(err);
       })
 
   }

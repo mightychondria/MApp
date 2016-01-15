@@ -30,6 +30,13 @@
       </div>
       <div ui-view></div>
       <div id="mapContainer">
+      <div id='trends' ng-init= 'trending()'>
+      <center>TOP HASHTAGS</center>
+        <div ng-repeat='item in trends'>
+
+          {{item}}
+        </div>
+        </div>
         <render-map id="map"></render-map>
         <div class='realTime-Tweets'>
           <div id="recentRelevantTweetsContainer">
@@ -38,12 +45,13 @@
                <li class="relevantTweets"><b>{{tweet.handle}}: </b>{{tweet.text}}</li>
               </div>
             </ul>
+
           </div>
+
         </div>
-        <div id='trends'>
-          {{trends}}
-        </div>
+
       </div>
+
    </div>
     <!--render map tag linking to custom directive -->
   </body>
