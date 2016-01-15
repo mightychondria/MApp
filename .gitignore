@@ -18,3 +18,4 @@ docker-compose.yml
 /client/directives/graphdbcontents.json
 server/data
 server/data2
+
