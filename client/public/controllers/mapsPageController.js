@@ -48,13 +48,15 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
         $scope.allTweets.data[i].setMap(map);
       }
     };
-
+    var markers = new L.FeatureGroup();
     var clearMarkers = function(){
-      setMapOnAll(null);
+      console.log('clear')
+      map.removeLayer(markers);
     };
     var deleteMarkers = function() {
-      clearMarkers();
-      $scope.allTweets.data = [];
+      console.log('delete')
+      map.removeLayer(markers);
+      markers = new L.FeatureGroup();
     };
 
     //establish tweet relevancy criteria;
@@ -122,33 +124,35 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
 
         ///////////////////////////////////PLACE ALL INCOMING TWEETS ON MAP///////////////////////////////////////
 
-        var tweetLocation = new google.maps.LatLng(data["coordinates"][1], data["coordinates"][0]);
+        var tweetLocation = [data["coordinates"][1], data["coordinates"][0]];
 
         heatmap.data.push(tweetLocation);
 
-        var tweetMarker = new google.maps.Marker({
-           icon: "client/assets/small-dot-icon.png",
-           position: tweetLocation,
-           map: window.map
-         });
+        var tweetMarker = L.marker(tweetLocation)
+        tweetMarker.bindPopup('<div>' + data['name'] + ": " + data['tweetText'] + '</div>');;
+
+        markers.addLayer(tweetMarker);
+        map.addLayer(markers)
+        //
+
 
         //determine content added to info window on each marker
-        var tweetContent = '<div>' + data['name'] + ": " + data['tweetText'] + '</div>';
-        var markerInfoWindow = new google.maps.InfoWindow({
-           content: tweetContent
-         });
+        // var tweetContent = '<div>' + data['name'] + ": " + data['tweetText'] + '</div>';
+        // var markerInfoWindow = new google.maps.InfoWindow({
+        //    content: tweetContent
+        //  });
 
         //set up listeners for each tweetMarker...
-        tweetMarker.addListener('mouseover', function () {
-          markerInfoWindow.open(map, tweetMarker);
-         });
-        tweetMarker.addListener('mouseout', function () {
-        markerInfoWindow.close();
-         });
-        // //set tweet on map...
-        tweetMarker.setMap(window.map, tweetLocation, tweetContent);
+      //   tweetMarker.addListener('mouseover', function () {
+      //     markerInfoWindow.open(map, tweetMarker);
+      //    });
+      //   tweetMarker.addListener('mouseout', function () {
+      //   markerInfoWindow.close();
+      //    });
+      //   // //set tweet on map...
+      //   tweetMarker.setMap(window.map, tweetLocation, tweetContent);
 
-        $scope.allTweets.data.push(tweetMarker);
+      //   $scope.allTweets.data.push(tweetMarker);
 
       })
 
