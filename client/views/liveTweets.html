@@ -1,0 +1,27 @@
+<div class="searchbar">
+  <form class='search' ng-submit="submitSearch()">
+    <input class='form-control' type="text" ng-model="searchField" placeholder="search"></input>
+    <button type="submit">search</button>
+  </form>
+</div>
+<div id="mapContainer">
+<!-- <div id='trends' ng-init= 'trending()'>
+<center>TOP HASHTAGS</center>
+  <div ng-repeat='item in trends'>
+    {{item}}
+  </div>
+  </div> -->
+  <render-map id="map"></render-map>
+  <div class='realTime-Tweets'>
+    <div id="recentRelevantTweetsContainer">
+      <ul id="listOfRelevantTweets" >
+        <div class='eachTweet' ng-repeat="tweet in relevantTweets track by $index">
+         <li class="relevantTweets"><b>{{tweet.handle}}: </b>{{tweet.text}}</li>
+        </div>
+      </ul>
+
+    </div>
+
+  </div>
+
+</div>

@@ -8,66 +8,47 @@
   </head>
 
   <body>
-    <nav ng-controller='signupController'>
-      <ul class='navigation'>
-        <li><a href="#">home</a></li>
-        <li><a href="#">map</a></li>
-        <li><a href="logout">sign out</a></li>
-      </ul>
-    </nav>
-
-    <!--ui view will be inserted below-->
-    <div ng-controller="mapsPageController">
-      <div class="searchbar">
-        <form class='search' ng-submit="submitSearch()">
-          <input class='form-control' type="text" ng-model="searchField" placeholder="search"></input>
-          <button type="submit">search</button>
-        </form>
-        <!-- We haven't gotten this working yet. clicking this button will send a favorite input to the database
-           <form ng-submit="favoriteSubmit()">
-          <input type="text" ng-model="favoriteField" placeholder="save to favorites"></input>
-          <button type="submit">send</button>
-        </form> -->
-      </div>
-      <div ui-view></div>
-      <div id="mapContainer">
-      <!-- <div id='trends' ng-init= 'trending()'>
-      <center>TOP HASHTAGS</center>
-        <div ng-repeat='item in trends'>
-          {{item}}
-        </div>
-        </div> -->
-        <render-map id="map"></render-map>
-        <div class='realTime-Tweets'>
-          <div id="recentRelevantTweetsContainer">
-            <ul id="listOfRelevantTweets" >
-              <div class='eachTweet'ng-repeat="tweet in relevantTweets track by $index">
-               <li class="relevantTweets"><b>{{tweet.handle}}: </b>{{tweet.text}}</li>
-              </div>
-            </ul>
-
-          </div>
-
-        </div>
-
-      </div>
-
-   </div>
-    <!--render map tag linking to custom directive -->
-  </body>
-
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
   <!--added animate in case future groups want to us its functionality-->
   <script src="/bower_components/angular-animate/angular-animate.js"></script>
   <script src="client/app.js"></script>
   <script src="client/public/controllers/signup.js"></script>
   <script src="client/directives/renderMap.js"></script>
+  <script src="client/directives/renderMapRelational.js"></script>
   <script src="client/public/services/httpService.js"></script>
   <script src="client/public/controllers/mapsPageController.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?libraries=visualization"></script>
   <script src="node_modules/socket.io-client/socket.io.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.js'></script>
 <script src="client/assets/stylesheets/leaflet-src.js"></script>
+    <nav ng-controller='signupController'>
+    <script>
+    var socket = io();
+    </script>
+      <ul class='navigation'>
+        <li><a href="#">home</a></li>
+        <li><a href="#/liveTweets">LIVE TWEET</a></li>
+        <li><a href="#/relational">Follower Map</a></li>
+        <li><a href="logout">sign out</a></li>
+      </ul>
+    </nav>
+
+    <!--ui view will be inserted below-->
+
+        <!-- We haven't gotten this working yet. clicking this button will send a favorite input to the database
+           <form ng-submit="favoriteSubmit()">
+          <input type="text" ng-model="favoriteField" placeholder="save to favorites"></input>
+          <button type="submit">send</button>
+        </form> -->
+
+      <div ng-view></div>
+
+
+    <!--render map tag linking to custom directive -->
+  </body>
+
+
 
 </html>
