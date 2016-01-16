@@ -131,12 +131,12 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
 
         //var tweetMarker = L.marker([data["coordinates"][1], data["coordinates"][0]]).addTo(map);
 
-        // var tweetMarker = L.marker(tweetLocation)
-        // tweetMarker.bindPopup('<div>' + data['name'] + ": " + data['tweetText'] + '</div>');;
+        var tweetMarker = L.marker(tweetLocation)
+        tweetMarker.bindPopup('<div>' + data['name'] + ": " + data['tweetText'] + '</div>');;
 
-        // markers.addLayer(tweetMarker);
-        // map.addLayer(markers)
-        // //
+        markers.addLayer(tweetMarker);
+        map.addLayer(markers)
+        //
 
 
         //determine content added to info window on each marker
