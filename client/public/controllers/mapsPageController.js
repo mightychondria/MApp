@@ -81,13 +81,7 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
       $scope.submitSearch = function () {
 
         deleteMarkers();
-        heatmap.setMap(null);
         socket.emit("filter", $scope.searchField);
-
-        heatmap = new google.maps.visualization.HeatmapLayer({
-          radius: 15
-        });
-        heatmap.setMap(window.map);
       };
 
       socket.on('tweet-stream', function (data) {
@@ -126,31 +120,12 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
 
         var tweetLocation = [data["coordinates"][1], data["coordinates"][0]];
 
-        heatmap.data.push(tweetLocation);
-
         var tweetMarker = L.marker(tweetLocation)
         tweetMarker.bindPopup('<div>' + data['name'] + ": " + data['tweetText'] + '</div>');;
 
         markers.addLayer(tweetMarker);
         map.addLayer(markers)
-        //
 
-
-        //determine content added to info window on each marker
-        // var tweetContent = '<div>' + data['name'] + ": " + data['tweetText'] + '</div>';
-        // var markerInfoWindow = new google.maps.InfoWindow({
-        //    content: tweetContent
-        //  });
-
-        //set up listeners for each tweetMarker...
-      //   tweetMarker.addListener('mouseover', function () {
-      //     markerInfoWindow.open(map, tweetMarker);
-      //    });
-      //   tweetMarker.addListener('mouseout', function () {
-      //   markerInfoWindow.close();
-      //    });
-      //   // //set tweet on map...
-      //   tweetMarker.setMap(window.map, tweetLocation, tweetContent);
 
       //   $scope.allTweets.data.push(tweetMarker);
 
@@ -159,6 +134,7 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
 
       socket.on('connected', function () {
         console.log('connected client');
+        socket.emit('unfilter')
         socket.emit('tweet flow');
       })
     };
