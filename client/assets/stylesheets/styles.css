@@ -29,14 +29,28 @@ svg {
     }
 
 path {
-    fill: #ffd800;
-    fill-opacity: .2;
+    /*fill: #ffd800;*/
+    /*fill-opacity: .1;*/
+    opacity: .3;
+    stroke-width: 1;
 }
 
 path:hover {
+    stroke-width: 3;
+        /*fill: brown;*/
+        /*fill-opacity: .7;*/
+}
+
+.nodes {
+    fill: #BF55EC;
+    opacity: .8;
+    /*fill-opacity: .2;*/
+}
+
+.nodes:hover {
         fill: brown;
-        fill-opacity: .7;
-    }
+        /*fill-opacity: .7;*/
+}
 
 
 #map {

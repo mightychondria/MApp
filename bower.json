@@ -23,6 +23,7 @@
     "angular-ui-router": "~0.2.15",
     "bootstrap": "~3.3.6",
     "animate.css": "https://github.com/daneden/animate.css.git#~3.5.1",
-    "angular-animate": "~1.4.8"
+    "angular-animate": "~1.4.8",
+    "arc.js": "~0.1.0"
   }
 }
