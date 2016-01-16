@@ -10,7 +10,7 @@ renderMap.directive('renderMap', function(){
       //define function that will inititialize the map
     var initMap = function() {
       if (map === void 0) {
-          d3.json("client/directives/graphdbcontents.json", function(error,collection) {
+          d3.json("client/directives/modi.json", function(error,collection) {
             if (error) { console.log('error reading json', error); }
             function reformat(array){
               var data = [];

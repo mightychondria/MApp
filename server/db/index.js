@@ -31,8 +31,13 @@ var db = require("seraph")({
 // });
 
 var saveToNodes = function (parent_screen_name, parent_id, screen_name, child_id) {
+
   fs.readFile('../data/' + parent_screen_name + '_' + screen_name, 'utf8', function (err, data) {
     if (err) return;
+
+    if (!data) {
+      return 
+    }
 
     var users = JSON.parse(data).users;
 
@@ -67,7 +72,7 @@ var saveToNodes = function (parent_screen_name, parent_id, screen_name, child_id
           });
         } else {
           db.save(node, function (err, savedNode) {
-            if (err) throw err;
+            if (err) { return; }
 
             db.relate(child_id, 'follows', savedNode.id, function (err, relationship) {
               console.log(relationship);
@@ -116,11 +121,30 @@ db.query(cypher, function(err, results) {
     saveToNodes('origin', null, 'narendramodi', results[0].id);
   } else {
     db.save({ 'screen_name': 'narendramodi', 'geo': [ 77.2035555, 28.6151554 ], 'twitter_id': 18839785, 'followers': 17359460 }, function (err, data) { 
-      if (err) throw err;
+      if (err) return;
       saveToNodes('origin', null, 'narendramodi', data.id);
     });
   }
 });
+
+
+// var cypher = ""
+//      + "MATCH (n) "
+//      + "WHERE n.screen_name='" + 'BarackObama' + "' "
+//      + "RETURN n;";
+
+// db.query(cypher, function(err, results) {
+//   if (err) throw err;
+
+//   if (results.length > 0) {
+//     saveToNodes('origin', null, 'BarackObama', results[0].id);
+//   } else {
+//     db.save({ 'screen_name': 'BarackObama', 'geo': [-77.0387185, 38.8976763], 'twitter_id': 18839785, 'followers': 17359460 }, function (err, data) { 
+//       if (err) throw err;
+//       saveToNodes('origin', null, 'BarackObama', data.id);
+//     });
+//   }
+// });
 
 
 // var cypher = ""
