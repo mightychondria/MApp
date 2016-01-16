@@ -1,5 +1,5 @@
-app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', "$timeout", function ($scope, $http, httpService, $sce, $timeout) {
-
+app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', "$timeout", '$location', function ($scope, $http, httpService, $sce, $timeout, $location) {
+  $scope.person = ['Kim Kardashian','Barack Obama','Narendra Modi','Cristiano Ronaldo', 'Shakira'];
   //////////////////////////////////////////MAPS PAGE CONTROLLER DRIVER//////////////////////////////////////////////
   $scope.trends = [];
   //create array that will contain data for ALL incoming tweets
@@ -33,7 +33,7 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
 
   ////////////////////////////////////////////CREATE AND OPEN SOCKET/////////////////////////////////////////////////////////
 
-  var onInit = function() {
+  // var onInit = function() {
 
     ////////////////////////////////ASSUMPTIONS + DRIVERS FOR HANDLING DATA STREAM///////////////////////////////////////////
 
@@ -76,14 +76,20 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
       var socket = io.connect();
       //uses socket to listen for incoming tweet stream
 
-      //code is a little buggy, but should offer a good start for doing the following when a search request is submitted:
-      // a) clearing the map, b) emitting a filter request to the stream and c) re-starting the heatmap
       $scope.submitSearch = function () {
+
 
         deleteMarkers();
         heatmap.setMap(null);
         socket.emit("filter", $scope.searchField);
+        if($scope.searchField === 'Kim Kardashian' || $scope.searchField === 'Barack Obama' || $scope.searchField === 'Narendra Modi' || $scope.searchField === 'Cristiano Ronaldo' || $scope.searchField ==='Shakira'){
+          // $scope.$apply(function(){
+          //   $scope.person = $scope.searchField;
+          // })
 
+          console.log($scope.person)
+          $location.path('/relational/' + $scope.searchField)
+        }
         heatmap = new google.maps.visualization.HeatmapLayer({
           radius: 15
         });
@@ -160,12 +166,12 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
       socket.on('connected', function () {
         console.log('connected client');
         socket.emit('tweet flow');
-        socket.emit('unfilter');
+        // socket.emit('unfilter');
       })
     };
 
-  };
+  // };
 
-  onInit();
+  // onInit();
 
 }]);

@@ -1,15 +1,13 @@
 var app = angular.module('app', ['signup', 'renderMap', 'renderMapRelational', 'ngAnimate', 'ngRoute'])
-  .controller('mapsPageController', ['$scope', '$http', function ($scope, $http){
-}])
-
-  .config(function ($routeProvider, $httpProvider){
+  .config(function ($routeProvider, $httpProvider, $locationProvider){
   $routeProvider
   .when('/liveTweets', {
     templateUrl: 'client/views/liveTweets.html',
     controller:'mapsPageController'
   })
-  .when('/relational', {
+  .when('/relational/:person', {
     templateUrl: 'client/views/relational.html',
+    controller: 'mapsPageController'
   })
 
 

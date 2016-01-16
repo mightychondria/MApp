@@ -1,9 +1,9 @@
 var renderMapRelational = angular.module('renderMapRelational', []);
 
-renderMapRelational.directive('renderMapRelational', function(){
+renderMapRelational.directive('renderMapRelational', function($location){
 
   //define function to be attributed to the link property on the returned object below
-  var link = function(scope, element, attrs) {
+  var link = function(scope) {
       //define map elements/styles
 
       if(map){
@@ -14,8 +14,12 @@ renderMapRelational.directive('renderMapRelational', function(){
 
       //define function that will inititialize the map
     var initMap = function() {
-      if (map === void 0) {
-          d3.json("client/directives/Barack.json", function(error,collection) {
+      if (map === void 0 ) {
+        scope.person = $location.path().split('/')[2];
+        scope.person = scope.person.replace(/\s/g, '');
+        var path = "client/directives/" + scope.person + ".json";
+        console.log(path)
+          d3.json("client/directives/" + scope.person + ".json", function(error,collection) {
             if (error) { console.log('error reading json', error); }
             function reformat(array){
               var data = [];
@@ -23,6 +27,7 @@ renderMapRelational.directive('renderMapRelational', function(){
                 data.push({
                   id: d.row[0].twitter_id,
                   type: "Feature",
+                  screen_name: d.row[0].screen_name,
                   geometry: {
                     coordinates: [+d.row[0].geo[0], +d.row[0].geo[1]],
                     type:'Point'
@@ -131,7 +136,27 @@ renderMapRelational.directive('renderMapRelational', function(){
         var leafletMap = L.map('map2',  {center: [37.8, 20], zoom: 3, minZoom:2} );
         window.map = leafletMap;
         L.tileLayer("http://{s}.sm.mapstack.stamen.com/(toner-lite,$fff[difference],$fff[@23],$fff[hsl-saturation@20])/{z}/{x}/{y}.png", {continuousWorld: false, noWrap: true }).addTo(leafletMap);
+        var drawLine = function(start, end) {
+          L.Polyline.Arc(start, end, {
+            color: "#ffd800",
+            vertices: 200,
+            length: 10
+          }).addTo(leafletMap);
+        };
+          var count2 = 0;
+        collection.data.forEach(function(obj) {
+          count2++;
+          if (typeof obj.row[0].geo[1] === 'number' &&
+            typeof obj.row[0].geo[0] === 'number' &&
+            typeof obj.row[1].geo[1] === 'number' &&
+            typeof obj.row[1].geo[0] === 'number' &&
+            (obj.row[0].geo[1] !== obj.row[1].geo[1] && obj.row[0].geo[0] !== obj.row[1].geo[0])
+            ) {
 
+            drawLine([obj.row[0].geo[1], obj.row[0].geo[0]], [obj.row[1].geo[1], obj.row[1].geo[0]])
+          }
+        });
+        console.log('count of lines', count2);
 
         var svg = d3.select(leafletMap.getPanes().overlayPane).append("svg");
         var g = svg.append("g").attr("class", "leaflet-zoom-hide");
@@ -153,28 +178,7 @@ renderMapRelational.directive('renderMapRelational', function(){
 
         mapmove();
 
-        var drawLine = function(start, end) {
-          L.Polyline.Arc(start, end, {
-            color: "#ffd800",
-            vertices: 200,
-            length: 10
-          }).addTo(leafletMap);
-        };
-          var count2 = 0;
-        collection.data.forEach(function(obj) {
-          count2++;
-          if (typeof obj.row[0].geo[1] === 'number' &&
-            typeof obj.row[0].geo[0] === 'number' &&
-            typeof obj.row[1].geo[1] === 'number' &&
-            typeof obj.row[1].geo[0] === 'number' &&
-            (obj.row[0].geo[1] !== obj.row[1].geo[1] && obj.row[0].geo[0] !== obj.row[1].geo[0])
-            ) {
 
-            console.log(obj);
-            drawLine([obj.row[0].geo[1], obj.row[0].geo[0]], [obj.row[1].geo[1], obj.row[1].geo[0]])
-          }
-        });
-        console.log('count of lines', count2);
 
 
 
@@ -190,7 +194,7 @@ renderMapRelational.directive('renderMapRelational', function(){
 
         function redrawSubset(subset) {
             path.pointRadius(3);// * scale);
-            console.log(collection)
+
 
             var bounds = path.bounds({ type: "FeatureCollection", features: subset });
             var topLeft = bounds[0];
@@ -222,6 +226,15 @@ renderMapRelational.directive('renderMapRelational', function(){
                 if (d.group) {
                     return (d.group * 0.1) + 0.2;
                 }
+            });
+
+            $('path.nodes').tipsy({
+              gravity: 'w',
+              html: true,
+              title: function() {
+                var d = this.__data__, screen_name = d.screen_name;
+                return '<span>'+ screen_name + '</span>';
+              }
             });
 
             // var lines = g.selectAll('line')
@@ -259,6 +272,9 @@ renderMapRelational.directive('renderMapRelational', function(){
       //restrict specifies how directive can be invoked on DOM
       restrict: 'E',
       replace: false,
+      scope: {
+            person: '='
+      },
       link: link
   };
 });

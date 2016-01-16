@@ -1,1 +1,7 @@
-<render-map-relational id="map2"></render-map-relational>
+<div class="searchbar">
+  <form class='search' ng-submit="submitSearch()">
+    <input class='form-control' type="text" ng-model="searchField" placeholder="search"></input>
+    <button type="submit">search</button>
+  </form>
+</div>
+<render-map-relational id="map2" person="person"></render-map-relational>

@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="client/assets/stylesheets/styles.css"></link>
     <link rel='stylesheet' href="../../bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="client/assets/stylesheets/leaflet.css" />
+    <link rel="stylesheet" href="client/assets/stylesheets/tipsy.css" />
     <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
     <!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" /> -->
     <link rel="stylesheet" href="client/assets/leaflet/leaflet.css"></link>
@@ -20,11 +21,15 @@
   <script src="client/directives/renderMap.js"></script>
   <script src="client/directives/renderMapRelational.js"></script>
   <script src="client/public/services/httpService.js"></script>
+  <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   <script src="client/public/controllers/mapsPageController.js"></script>
+
   <script src="https://maps.googleapis.com/maps/api/js?libraries=visualization"></script>
   <script src="node_modules/socket.io-client/socket.io.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.js'></script>
   <script src="client/assets/stylesheets/leaflet-src.js"></script>
+  <script src="client/assets/jquery.tipsy.js"></script>
   <script src="bower_components/arc.js/arc.js"></script>
   <script src="bower_components/arc.js/Leaflet.Arc.js"></script>
     <nav ng-controller='signupController'>
@@ -34,7 +39,6 @@
       <ul class='navigation'>
         <li><a href="#">home</a></li>
         <li><a href="#/liveTweets">LIVE TWEET</a></li>
-        <li><a href="#/relational">Follower Map</a></li>
         <li><a href="logout">sign out</a></li>
       </ul>
     </nav>

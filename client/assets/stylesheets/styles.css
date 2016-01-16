@@ -82,6 +82,7 @@ path:hover {
   width:300px;
   left:300px;
   z-index:1000;
+  padding:5px;
   margin-right:auto;
   margin-left:auto;
   position:relative;
@@ -152,15 +153,15 @@ button {
 
 nav {
   position: absolute;
+  font-family: Helvetica Neue, 'Helvetica', Arial, sans-serif;
   top:0px;
-  left: 0px;
+  left: 60px;
   z-index: 100;
   background: #2F2F2F;
-  padding:10px;
-  border-left:3px solid black;
-  border-right:3px solid black;
-  border-bottom: 3px solid black;
-  border-radius:5px;
+  padding: 2px;
+  border: 1px solid black;
+  border-radius:3px;
+  opacity:.7;
 }
 
 nav ul li {
@@ -168,7 +169,7 @@ nav ul li {
 }
 
 nav ul li a {
-  color: #32CD32;
+  color: #32F5F6;
 }
 
 

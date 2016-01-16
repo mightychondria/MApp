@@ -39,8 +39,7 @@ renderMap.directive('renderMap', function(){
                   .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
 
               window.map = map;
-              this.svg = d3.select(map.getPanes().overlayPane).append("svg"),
-              this.sg = svg.append("g").attr("class", "zoomAinmation");
+
               var svg = d3.select(map.getPanes().overlayPane).append("svg"),
               g = svg.append("g").attr("class", "zoomAinmation");
               L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
