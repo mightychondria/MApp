@@ -5,12 +5,17 @@ renderMapRelational.directive('renderMapRelational', function(){
   //define function to be attributed to the link property on the returned object below
   var link = function(scope, element, attrs) {
       //define map elements/styles
+
+      if(map){
+        map.remove();
+      }
+
     var map;
-      
+
       //define function that will inititialize the map
     var initMap = function() {
       if (map === void 0) {
-          d3.json("client/directives/modi.json", function(error,collection) {
+          d3.json("client/directives/Barack.json", function(error,collection) {
             if (error) { console.log('error reading json', error); }
             function reformat(array){
               var data = [];
@@ -159,9 +164,9 @@ renderMapRelational.directive('renderMapRelational', function(){
         collection.data.forEach(function(obj) {
           count2++;
           if (typeof obj.row[0].geo[1] === 'number' &&
-            typeof obj.row[0].geo[0] === 'number' && 
+            typeof obj.row[0].geo[0] === 'number' &&
             typeof obj.row[1].geo[1] === 'number' &&
-            typeof obj.row[1].geo[0] === 'number' && 
+            typeof obj.row[1].geo[0] === 'number' &&
             (obj.row[0].geo[1] !== obj.row[1].geo[1] && obj.row[0].geo[0] !== obj.row[1].geo[0])
             ) {
 
@@ -170,7 +175,7 @@ renderMapRelational.directive('renderMapRelational', function(){
           }
         });
         console.log('count of lines', count2);
-          
+
 
 
 
@@ -221,7 +226,7 @@ renderMapRelational.directive('renderMapRelational', function(){
 
             // var lines = g.selectAll('line')
             //             .data(geoData, function (d) {
-            //               return 
+            //               return
             //             });
 
 
@@ -244,7 +249,8 @@ renderMapRelational.directive('renderMapRelational', function(){
     };
 
       initMap();
-      
+
+
   };
 
 

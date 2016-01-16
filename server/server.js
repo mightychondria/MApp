@@ -137,6 +137,10 @@ io.sockets.on('connection', function(socket) {
     console.log('in filter' , topic.replace(/\s/g, ''))
                 twitterTopic = topic.replace(/\s/g, '');
               });
+  socket.on('unfilter', function(topic) {
+    console.log('unfiltering')
+                twitterTopic = undefined;
+              });
   socket.on("disconnect", function() {
     console.log('disconnected');
   });
