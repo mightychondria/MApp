@@ -7,6 +7,40 @@ renderMap.directive('renderMap', function(){
       //define map elements/styles
       var map;
 
+      // var mapOptions = {
+      //     center: new google.maps.LatLng(0, 0),
+      //     zoom: 2,
+      //     minZoom: 2,
+      //     mapTypeControl: true,
+      //     mapTypeControl: true,
+      //       mapTypeControlOptions: {
+      //         style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+      //         position: google.maps.ControlPosition.TOP_CENTER
+      //       },
+      //       zoomControl: true,
+      //       zoomControlOptions: {
+      //         position: google.maps.ControlPosition.LEFT_CENTER
+      //       },
+      //     scrollwheel: true,
+      //     styles: styles
+      // };
+
+      //define function that will inititialize the map
+      // var initMap = function() {
+      //     if (map === void 0) {
+      //         map = new L.Map("map", {center: [37.8, 20], zoom: 2, minZoom:2})
+      //             .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+      //             map.dragging.disable();
+      //         window.map = map;
+      //         var svg = d3.select(map.getPanes().overlayPane).append("svg"),
+      //         g = svg.append("g").attr("class", "zoomAinmation");
+      //         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      //         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      //         }).addTo(map);
+
+
+      //     }
+      
       //define function that will inititialize the map
       var initMap = function() {
           if (map === void 0) {
@@ -221,9 +255,6 @@ renderMap.directive('renderMap', function(){
 
 
               })
-
-
-
           }
       };
 
