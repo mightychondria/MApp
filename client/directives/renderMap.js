@@ -41,13 +41,14 @@ renderMap.directive('renderMap', function(){
               window.map = map;
               this.svg = d3.select(map.getPanes().overlayPane).append("svg"),
               this.sg = svg.append("g").attr("class", "zoomAinmation");
+              var svg = d3.select(map.getPanes().overlayPane).append("svg"),
+              g = svg.append("g").attr("class", "zoomAinmation");
               L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
               attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               }).addTo(map);
 
 
           }
-
 
   };
 

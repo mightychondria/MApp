@@ -5,6 +5,8 @@
     <link rel='stylesheet' href="../../bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="client/assets/stylesheets/leaflet.css" />
     <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+    <!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" /> -->
+    <link rel="stylesheet" href="client/assets/leaflet/leaflet.css"></link>
   </head>
 
   <body>
@@ -22,7 +24,9 @@
   <script src="https://maps.googleapis.com/maps/api/js?libraries=visualization"></script>
   <script src="node_modules/socket.io-client/socket.io.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.js'></script>
-<script src="client/assets/stylesheets/leaflet-src.js"></script>
+  <script src="client/assets/stylesheets/leaflet-src.js"></script>
+  <script src="bower_components/arc.js/arc.js"></script>
+  <script src="bower_components/arc.js/Leaflet.Arc.js"></script>
     <nav ng-controller='signupController'>
     <script>
     var socket = io();
@@ -48,7 +52,5 @@
 
     <!--render map tag linking to custom directive -->
   </body>
-
-
 
 </html>

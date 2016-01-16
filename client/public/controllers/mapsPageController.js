@@ -39,6 +39,7 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
 
     //establish map drivers
     var maxNumOfTweetsAllowedOnMap = 1000;
+
     var heatmap = new google.maps.visualization.HeatmapLayer({
       radius: 15
     });
@@ -66,9 +67,9 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
 
 
     //////////////////////////////////////////SET UP HEAT MAP///////////////////////////////////////////////////
-    $timeout(function(){
-      heatmap.setMap(window.map);
-    }, 10);
+    // $timeout(function(){
+    //   heatmap.setMap(window.map);
+    // }, 10);
 
     //////////////////////////////////////////CONNECT TO SOCKET///////////////////////////////////////////////
     if(io !== undefined) {
@@ -78,54 +79,56 @@ app.controller('mapsPageController', ['$scope', '$http', 'httpService', '$sce', 
 
       //code is a little buggy, but should offer a good start for doing the following when a search request is submitted:
       // a) clearing the map, b) emitting a filter request to the stream and c) re-starting the heatmap
-      $scope.submitSearch = function () {
 
+      // $scope.submitSearch = function () {
         deleteMarkers();
         socket.emit("filter", $scope.searchField);
       };
 
       socket.on('tweet-stream', function (data) {
 
-        if($scope.allTweets.data.length > maxNumOfTweetsAllowedOnMap){
-          var pinToRemove = $scope.allTweets.data.shift();
-          pinToRemove.setMap(null);
-        }
+      //   if($scope.allTweets.data.length > maxNumOfTweetsAllowedOnMap){
+      //     var pinToRemove = $scope.allTweets.data.shift();
+      //     pinToRemove.setMap(null);
+      //   }
+
         ///////////////////////////////////DETERMINE RELEVANCE/QUALITY OF TWEET//////////////////////////////////
         //set relevant parameters
-        var numOfFollowers = data.followers_count;
-        var numOfRetweets = data.retweet_count;
-        var verifiedAccount = data.verified;
-        var tweetObject = {};
-        //if incoming tweet meets relevancy criteria...
-        if((numOfFollowers >= numOfFollowersToBeRelevant) || (numOfRetweets >= numOfRetweetsToBeRelevant)){
-          //then check to see how many relevant tweets are already being displayed on page; if max limit
-          //has already been reached then pop last item out of relevantsTweets array
-          if($scope.relevantTweets.length === maxNumOfRelevantTweetsAllowed){
-            $scope.relevantTweets.pop();
-          }
-          //for all incoming tweets that match criteria, create a tweetObject that contains most relevant info for tweet
-          //(e.g. handle, content, and time);
-          tweetObject = {
-            handle: data.handle,
-            text: data.tweetText,
-            time: data.tweetTime
-          };
-          //add latest tweetObject to the beginning of the relevantTweets array;
-          $scope.$apply(function() {
-            $scope.addRelevantTweet(tweetObject);
-          })
-        }
+        // var numOfFollowers = data.followers_count;
+        // var numOfRetweets = data.retweet_count;
+        // var verifiedAccount = data.verified;
+        // var tweetObject = {};
+        // //if incoming tweet meets relevancy criteria...
+        // if((numOfFollowers >= numOfFollowersToBeRelevant) || (numOfRetweets >= numOfRetweetsToBeRelevant)){
+        //   //then check to see how many relevant tweets are already being displayed on page; if max limit
+        //   //has already been reached then pop last item out of relevantsTweets array
+        //   if($scope.relevantTweets.length === maxNumOfRelevantTweetsAllowed){
+        //     $scope.relevantTweets.pop();
+        //   }
+        //   //for all incoming tweets that match criteria, create a tweetObject that contains most relevant info for tweet
+        //   //(e.g. handle, content, and time);
+        //   tweetObject = {
+        //     handle: data.handle,
+        //     text: data.tweetText,
+        //     time: data.tweetTime
+        //   };
+        //   //add latest tweetObject to the beginning of the relevantTweets array;
+        //   $scope.$apply(function() {
+        //     $scope.addRelevantTweet(tweetObject);
+        //   })
+        // }
 
         ///////////////////////////////////PLACE ALL INCOMING TWEETS ON MAP///////////////////////////////////////
 
         var tweetLocation = [data["coordinates"][1], data["coordinates"][0]];
+        //var tweetMarker = L.marker([data["coordinates"][1], data["coordinates"][0]]).addTo(map);
 
         var tweetMarker = L.marker(tweetLocation)
         tweetMarker.bindPopup('<div>' + data['name'] + ": " + data['tweetText'] + '</div>');;
 
         markers.addLayer(tweetMarker);
         map.addLayer(markers)
-
+        //
 
       //   $scope.allTweets.data.push(tweetMarker);
 

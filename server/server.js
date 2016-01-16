@@ -14,6 +14,7 @@ var TwitterAPI = require('./controllers/twitterApiController.js');
 var textSearch = require('./textSearch.js');
 var Auth = require('./auth/auth.js');
 var fs  = require('fs');
+
 // **Important password and keys **
 if(!process.env.CONSUMER_KEY){
   var KEYS = require('../config.js');
@@ -30,6 +31,7 @@ var twitterTopic;
 // ** NEED TO IMPLEMENT Setup server to listen to MongoLab URI delegating to local db
 var mapDB = process.env.MONGOLAB_URI || 'mongodb://localhost/mapApp'
 // 'mongodb://' + key + ':' + db_pass + '@ds039095.mongolab.com:39095/users-tweets';
+
 mongoose.connect(mapDB);
 // Set Up Authorization
 Auth.initialize();
@@ -123,6 +125,8 @@ io.sockets.on('connection', function(socket) {
 
             }
             //Tweet Object that has been scrubbed for relevant data
+
+          } else {
 
           }
         }
